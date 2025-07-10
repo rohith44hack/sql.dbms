@@ -1,0 +1,253 @@
+mysql> select * from student38;                                                                                         ERROR 1046 (3D000): No database selected                                                                                mysql> use mydb                                                                                                         Database changed                                                                   Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select * from student38;
+ERROR 1046 (3D000): No database selected
+mysql> use mydb
+Database changed
+mysql> select * from student38;
+Empty set (0.00 sec)
+
+mysql> ALTER TABLE student38
+    -> ADD COLUMN student_id INT,
+    -> ADD COLUMN name VARCHAR(100),
+    -> ADD COLUMN department VARCHAR(100),
+    -> ADD COLUMN marks INT;
+ERROR 1060 (42S21): Duplicate column name 'student_id'
+mysql> drop table student38;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE student38 (
+    ->     student_id INT PRIMARY KEY,
+    ->     name VARCHAR(100),
+    ->     department VARCHAR(100),
+    ->     marks INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ALTER TABLE student38
+    -> ADD COLUMN email VARCHAR(255);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student38
+    -> MODIFY COLUMN marks FLOAT;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student38;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| student_id | int          | NO   | PRI | NULL    |       |
+| name       | varchar(100) | YES  |     | NULL    |       |
+| department | varchar(100) | YES  |     | NULL    |       |
+| marks      | float        | YES  |     | NULL    |       |
+| email      | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> ALTER TABLE student38
+    -> CHANGE COLUMN student student_age INT;
+ERROR 1054 (42S22): Unknown column 'student' in 'student38'
+mysql> ALTER TABLE student38
+    -> CHANGE COLUMN age student_age INT;
+ERROR 1054 (42S22): Unknown column 'age' in 'student38'
+mysql>
+mysql> ALTER TABLE student38
+    -> CHANGE COLUMN age student_age INT;
+ERROR 1054 (42S22): Unknown column 'age' in 'student38'
+mysql> ALTER TABLE student38
+    -> ADD COLUMN age INT;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE student38
+    -> CHANGE COLUMN age student_age INT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student38;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| student_id  | int          | NO   | PRI | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| department  | varchar(100) | YES  |     | NULL    |       |
+| marks       | float        | YES  |     | NULL    |       |
+| email       | varchar(255) | YES  |     | NULL    |       |
+| student_age | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> remove the email colunm
+    -> ALTER TABLE student38
+    -> DROP COLUMN email;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'remove the email colunm
+ALTER TABLE student38
+DROP COLUMN email' at line 1
+mysql> ^BALTER TABLE student38
+    -> DROP COLUMN email;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '☻ALTER TABLE student38
+DROP COLUMN email' at line 1
+mysql> ALTER TABLE student38
+    -> DROP COLUMN email;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student38;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| student_id  | int          | NO   | PRI | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| department  | varchar(100) | YES  |     | NULL    |       |
+| marks       | float        | YES  |     | NULL    |       |
+| student_age | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO student38 (student_id, name, department, marks, student_age)
+    -> VALUES (1, 'Alice', 'Computer Science', 85.5, 20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> INSERT INTO student38 (student_id, name, department, marks, student_age)
+    -> VALUES (2, 'Bob', 'Mathematics', 78.0, 22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> INSERT INTO student38 (student_id, name, department, marks, student_age)
+    -> VALUES (3, 'Rohith', 'Computer Science', 90.5, 19);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> INSERT INTO student38 (student_id, name, department, marks, student_age)
+    -> VALUES (4, 'Diana', 'Chemistry', 88.7, 19);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> INSERT INTO student38 (student_id, name, department, marks, student_age)
+    -> VALUES (5, 'Ethan', 'Biology', 74.5, 23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student38;
++------------+--------+------------------+-------+-------------+
+| student_id | name   | department       | marks | student_age |
++------------+--------+------------------+-------+-------------+
+|          1 | Alice  | Computer Science |  85.5 |          20 |
+|          2 | Bob    | Mathematics      |    78 |          22 |
+|          3 | Rohith | Computer Science |  90.5 |          19 |
+|          4 | Diana  | Chemistry        |  88.7 |          19 |
+|          5 | Ethan  | Biology          |  74.5 |          23 |
++------------+--------+------------------+-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name, marks FROM student38;
++--------+-------+
+| name   | marks |
++--------+-------+
+| Alice  |  85.5 |
+| Bob    |    78 |
+| Rohith |  90.5 |
+| Diana  |  88.7 |
+| Ethan  |  74.5 |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name, marks FROM student38
+    -> WHERE marks > 80;
++--------+-------+
+| name   | marks |
++--------+-------+
+| Alice  |  85.5 |
+| Rohith |  90.5 |
+| Diana  |  88.7 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE student38
+    -> SET department = 'Physics'
+    -> WHERE student_id = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> desc student38;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| student_id  | int          | NO   | PRI | NULL    |       |
+| name        | varchar(100) | YES  |     | NULL    |       |
+| department  | varchar(100) | YES  |     | NULL    |       |
+| marks       | float        | YES  |     | NULL    |       |
+| student_age | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student38;
++------------+--------+------------------+-------+-------------+
+| student_id | name   | department       | marks | student_age |
++------------+--------+------------------+-------+-------------+
+|          1 | Alice  | Computer Science |  85.5 |          20 |
+|          2 | Bob    | Mathematics      |    78 |          22 |
+|          3 | Rohith | Computer Science |  90.5 |          19 |
+|          4 | Diana  | Physics          |  88.7 |          19 |
+|          5 | Ethan  | Biology          |  74.5 |          23 |
++------------+--------+------------------+-------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM student38
+    -> WHERE marks < 80;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> DELETE FROM student38
+    -> DELETE FROM student38;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELETE FROM student38' at line 2
+mysql> select * from student38;
++------------+--------+------------------+-------+-------------+
+| student_id | name   | department       | marks | student_age |
++------------+--------+------------------+-------+-------------+
+|          1 | Alice  | Computer Science |  85.5 |          20 |
+|          3 | Rohith | Computer Science |  90.5 |          19 |
+|          4 | Diana  | Physics          |  88.7 |          19 |
++------------+--------+------------------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM student38
+    -> WHERE department = 'Mathematics';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM student38;
++------------+--------+------------------+-------+-------------+
+| student_id | name   | department       | marks | student_age |
++------------+--------+------------------+-------+-------------+
+|          1 | Alice  | Computer Science |  85.5 |          20 |
+|          3 | Rohith | Computer Science |  90.5 |          19 |
+|          4 | Diana  | Physics          |  88.7 |          19 |
++------------+--------+------------------+-------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> WHERE department = 'physics';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE department = 'physics'' at line 1
+mysql> DELETE FROM student38
+    -> WHERE department = 'Physics';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM student38;
++------------+--------+------------------+-------+-------------+
+| student_id | name   | department       | marks | student_age |
++------------+--------+------------------+-------+-------------+
+|          1 | Alice  | Computer Science |  85.5 |          20 |
+|          3 | Rohith | Computer Science |  90.5 |          19 |
++------------+--------+------------------+-------+-------------+
+2 rows in set (0.00 sec)
