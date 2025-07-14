@@ -1,0 +1,181 @@
+mysql> use mydb
+Database changed
+mysql> CREATE TABLE StudentDetails38 (
+    ->     ID INT PRIMARY KEY,
+    ->     Name VARCHAR(100),
+    ->     Gender CHAR(1),
+    ->     Marks DECIMAL(5,2),
+    ->     DOB DATE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO StudentDetails38 (ID, Name, Gender, Marks, DOB) VALUES
+    -> (1, 'Aman', 'M', 85, '2004-06-12'),
+    -> (2, 'Sara', 'F', 72, '2005-08-10'),
+    -> (3, 'Ramesh', 'M', 68, '2003-11-15'),
+    -> (4, 'Sneha', 'F', 90, '2005-01-20'),
+    -> (5, 'Aakash', 'M', 45, '2004-03-30');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++------------------+
+| Tables_in_mydb   |
++------------------+
+| student          |
+| student38        |
+| studentdetails38 |
++------------------+
+3 rows in set (0.01 sec)
+
+mysql> drop table student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from studentdeatils38;
+ERROR 1146 (42S02): Table 'mydb.studentdeatils38' doesn't exist
+mysql> select * from studentdetails;
+ERROR 1146 (42S02): Table 'mydb.studentdetails' doesn't exist
+mysql> select * from studentdetail38;
+ERROR 1146 (42S02): Table 'mydb.studentdetail38' doesn't exist
+mysql> select * from studentdetails38;
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  2 | Sara   | F      | 72.00 | 2005-08-10 |
+|  3 | Ramesh | M      | 68.00 | 2003-11-15 |
+|  4 | Sneha  | F      | 90.00 | 2005-01-20 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Name LIKE 'S%';
++----+-------+--------+-------+------------+
+| ID | Name  | Gender | Marks | DOB        |
++----+-------+--------+-------+------------+
+|  2 | Sara  | F      | 72.00 | 2005-08-10 |
+|  4 | Sneha | F      | 90.00 | 2005-01-20 |
++----+-------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Name LIKE '%n';
++----+------+--------+-------+------------+
+| ID | Name | Gender | Marks | DOB        |
++----+------+--------+-------+------------+
+|  1 | Aman | M      | 85.00 | 2004-06-12 |
++----+------+--------+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Name LIKE '%ra%';
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  2 | Sara   | F      | 72.00 | 2005-08-10 |
+|  3 | Ramesh | M      | 68.00 | 2003-11-15 |
++----+--------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT TOP 5 *
+    -> FROM StudentDetails38;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5 *
+FROM StudentDetails38' at line 1
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> LIMIT 5;
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  2 | Sara   | F      | 72.00 | 2005-08-10 |
+|  3 | Ramesh | M      | 68.00 | 2003-11-15 |
+|  4 | Sneha  | F      | 90.00 | 2005-01-20 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE LENGTH(Name) = 5;
++----+-------+--------+-------+------------+
+| ID | Name  | Gender | Marks | DOB        |
++----+-------+--------+-------+------------+
+|  4 | Sneha | F      | 90.00 | 2005-01-20 |
++----+-------+--------+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Marks BETWEEN 60 AND 80;
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  2 | Sara   | F      | 72.00 | 2005-08-10 |
+|  3 | Ramesh | M      | 68.00 | 2003-11-15 |
++----+--------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE DOB BETWEEN '2004-01-01' AND '2004-12-31';
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Name BETWEEN 'A' AND 'Kz';
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Name BETWEEN 'A' AND 'K';
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> fistudent who scored below 50 and above 80 using NOT BETWEEN
+    -> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Marks NOT BETWEEN 50 AND 80;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fistudent who scored below 50 and above 80 using NOT BETWEEN
+SELECT *
+FROM Stud' at line 1
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Marks NOT BETWEEN 50 AND 80;
++----+--------+--------+-------+------------+
+| ID | Name   | Gender | Marks | DOB        |
++----+--------+--------+-------+------------+
+|  1 | Aman   | M      | 85.00 | 2004-06-12 |
+|  4 | Sneha  | F      | 90.00 | 2005-01-20 |
+|  5 | Aakash | M      | 45.00 | 2004-03-30 |
++----+--------+--------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM StudentDetails38
+    -> WHERE Gender = 'F'
+    ->   AND DOB BETWEEN '2003-01-01' AND '2004-12-31';
+Empty set (0.00 sec)
+
+mysql>
