@@ -126,3 +126,37 @@ mysql> SELECT Product, SUM(Quantity) AS TotalQuantitySold
 | eraser   |                12 |
 +----------+-------------------+
 4 rows in set (0.00 sec)
+mysql> SELECT Product, SUM(Quantity) AS TotalQuantity
+    -> FROM sales
+    -> GROUP BY Product
+    -> HAVING SUM(Quantity) > 20;
++---------+---------------+
+| Product | TotalQuantity |
++---------+---------------+
+| pen     |            23 |
+| pencil  |            35 |
++---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT Product, COUNT(*) AS TimesSold
+    -> FROM sales
+    -> GROUP BY Product
+    -> HAVING COUNT(*) > 2;
++---------+-----------+
+| Product | TimesSold |
++---------+-----------+
+| pen     |         3 |
++---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Product, AVG(Price) AS AvgPrice
+    -> FROM sales
+    -> GROUP BY Product
+    -> HAVING AVG(Price) < 5;
++---------+----------+
+| Product | AvgPrice |
++---------+----------+
+| pencil  | 3.000000 |
+| eraser  | 2.000000 |
++---------+----------+
+2 rows in set (0.00 sec)
