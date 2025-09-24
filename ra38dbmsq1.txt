@@ -1,0 +1,217 @@
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;p
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| supermarket        |
++--------------------+
+3 rows in set (0.00 sec)
+
+    -> drop table supermarket;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'p
+drop table supermarket' at line 1
+mysql> drop table products;
+ERROR 1046 (3D000): No database selected
+mysql> use supermarket;
+Database changed
+mysql> drop table products;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE TABLE products (
+    ->     ptdid INT,
+    ->     ptdcode CHAR(1),
+    ->     name VARCHAR(255),
+    ->     quantity INT,
+    ->     price DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_supermarket |
++-----------------------+
+| products              |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> INSINSERT INTO products (ptdid, ptdcode, name, quantity, price) VALUES
+    -> (1, 'P', 'Pen', 100, 450.00),
+    -> (2, 'N', 'Notebook', 50, 800.00),
+    -> (3, 'E', 'Eraser', 200, 400.00),
+    -> (4, 'M', 'Marker', 75, 1200.00),
+    -> (5, 'S', 'Stapler', 30, 1100.00);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSINSERT INTO products (ptdid, ptdcode, name, quantity, price) VALUES
+(1, 'P', ' at line 1
+mysql> INSERT INTO products (ptdid, ptdcode, name, quantity, price) VALUES
+    -> (1, 'P', 'Pen', 100, 450.00),
+    -> (2, 'N', 'Notebook', 50, 800.00),
+    -> (3, 'E', 'Eraser', 200, 400.00),
+    -> (4, 'M', 'Marker', 75, 1200.00),
+    -> (5, 'S', 'Stapler', 30, 1100.00);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO products (ptdid, ptdcode, name, quantity, price) VALUES
+    -> (NULL, 'X', 'Glue', 40, 500.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO products (ptdcode, name, price) VALUES
+    -> ('G', 'Glue', 500.00);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from products;
++-------+---------+----------+----------+---------+
+| ptdid | ptdcode | name     | quantity | price   |
++-------+---------+----------+----------+---------+
+|     1 | P       | Pen      |      100 |  450.00 |
+|     2 | N       | Notebook |       50 |  800.00 |
+|     3 | E       | Eraser   |      200 |  400.00 |
+|     4 | M       | Marker   |       75 | 1200.00 |
+|     5 | S       | Stapler  |       30 | 1100.00 |
+|  NULL | X       | Glue     |       40 |  500.00 |
+|  NULL | G       | Glue     |     NULL |  500.00 |
++-------+---------+----------+----------+---------+
+7 rows in set (0.00 sec)
+
+mysql> DELETE FROM products
+    -> WHERE ptdid = (SELECT MAX(ptdid) FROM products);
+ERROR 1093 (HY000): You can't specify target table 'products' for update in FROM clause
+mysql> DELETE FROM products
+    -> WHERE ptdid = (SELECT MAX(ptdid) FROM products);
+ERROR 1093 (HY000): You can't specify target table 'products' for update in FROM clause
+mysql> DELETE FROM products
+    -> WHERE ptdid = (
+    ->     SELECT max_ptdid FROM (
+    ->         SELECT MAX(ptdid) AS max_ptdid FROM products
+    ->     ) AS temp
+    -> );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from products;
++-------+---------+----------+----------+---------+
+| ptdid | ptdcode | name     | quantity | price   |
++-------+---------+----------+----------+---------+
+|     1 | P       | Pen      |      100 |  450.00 |
+|     2 | N       | Notebook |       50 |  800.00 |
+|     3 | E       | Eraser   |      200 |  400.00 |
+|     4 | M       | Marker   |       75 | 1200.00 |
+|  NULL | X       | Glue     |       40 |  500.00 |
+|  NULL | G       | Glue     |     NULL |  500.00 |
++-------+---------+----------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT ptdid, ptdcode FROM products;
++-------+---------+
+| ptdid | ptdcode |
++-------+---------+
+|     1 | P       |
+|     2 | N       |
+|     3 | E       |
+|     4 | M       |
+|  NULL | X       |
+|  NULL | G       |
++-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM products;
++-------+---------+----------+----------+---------+
+| ptdid | ptdcode | name     | quantity | price   |
++-------+---------+----------+----------+---------+
+|     1 | P       | Pen      |      100 |  450.00 |
+|     2 | N       | Notebook |       50 |  800.00 |
+|     3 | E       | Eraser   |      200 |  400.00 |
+|     4 | M       | Marker   |       75 | 1200.00 |
+|  NULL | X       | Glue     |       40 |  500.00 |
+|  NULL | G       | Glue     |     NULL |  500.00 |
++-------+---------+----------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT name, price
+    -> FROM products
+    -> WHERE price < 1000;
++----------+--------+
+| name     | price  |
++----------+--------+
+| Pen      | 450.00 |
+| Notebook | 800.00 |
+| Eraser   | 400.00 |
+| Glue     | 500.00 |
+| Glue     | 500.00 |
++----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name, quantity
+    -> FROM products
+    -> WHERE quantity <= 2000;
++----------+----------+
+| name     | quantity |
++----------+----------+
+| Pen      |      100 |
+| Notebook |       50 |
+| Eraser   |      200 |
+| Marker   |       75 |
+| Glue     |       40 |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select name, quantity
+    -> from products
+    -> where quantity <=200
+    -> ;
++----------+----------+
+| name     | quantity |
++----------+----------+
+| Pen      |      100 |
+| Notebook |       50 |
+| Eraser   |      200 |
+| Marker   |       75 |
+| Glue     |       40 |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select name, quantity  from products where quantity <=100
+    -> ;
++----------+----------+
+| name     | quantity |
++----------+----------+
+| Pen      |      100 |
+| Notebook |       50 |
+| Marker   |       75 |
+| Glue     |       40 |
++----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name, price
+    -> FROM products
+    -> WHERE name = 'Pen';
++------+--------+
+| name | price  |
++------+--------+
+| Pen  | 450.00 |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT name, price
+    -> FROM products
+    -> WHERE name = 'Pen';
++------+--------+
+| name | price  |
++------+--------+
+| Pen  | 450.00 |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT name, price
+    -> FROM products
+    -> WHERE name = 'Pen';
++------+--------+
+| name | price  |
++------+--------+
+| Pen  | 450.00 |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql>

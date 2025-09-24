@@ -1,0 +1,83 @@
+mysql> show tables;
++-----------------------+
+| Tables_in_supermarket |
++-----------------------+
+| products              |
++-----------------------+
+1 row in set (0.04 sec)
+
+mysql> select* from products;
++-------+---------+----------+----------+---------+
+| ptdid | ptdcode | name     | quantity | price   |
++-------+---------+----------+----------+---------+
+|     1 | P       | Pen      |      100 |  450.00 |
+|     2 | N       | Notebook |       50 |  800.00 |
+|     3 | E       | Eraser   |      200 |  400.00 |
+|     4 | M       | Marker   |       75 | 1200.00 |
+|  NULL | X       | Glue     |       40 |  500.00 |
+|  NULL | G       | Glue     |     NULL |  500.00 |
++-------+---------+----------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> create database children;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE TABLE child (
+    ->   cid INT,
+    ->   relationship VARCHAR(50),
+    ->   childname VARCHAR(100),
+    ->   parentname VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO child (cid, relationship, childname, parentname) VALUES
+    -> (1, 'son', 'Arjun', 'Ravi'),
+    -> (2, 'daughter', 'Meera', 'Ravi'),
+    -> (3, 'son', 'Kabir', 'Anita'),
+    -> (4, 'daughter', 'Liya', 'Anita'),
+    -> (5, 'son', 'Aman', 'Suresh');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select* from child;
++------+--------------+-----------+------------+
+| cid  | relationship | childname | parentname |
++------+--------------+-----------+------------+
+|    1 | son          | Arjun     | Ravi       |
+|    2 | daughter     | Meera     | Ravi       |
+|    3 | son          | Kabir     | Anita      |
+|    4 | daughter     | Liya      | Anita      |
+|    5 | son          | Aman      | Suresh     |
++------+--------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT cid, COUNT(childname) AS total_children, GROUP_CONCAT(childname) AS children_names
+    -> FROM child
+    -> GROUP BY cid;
++------+----------------+----------------+
+| cid  | total_children | children_names |
++------+----------------+----------------+
+|    1 |              1 | Arjun          |
+|    2 |              1 | Meera          |
+|    3 |              1 | Kabir          |
+|    4 |              1 | Liya           |
+|    5 |              1 | Aman           |
++------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT cid, parentname, COUNT(*) AS total_children
+    -> FROM child
+    -> GROUP BY cid, parentname
+    -> HAVING COUNT(*) > 0;
++------+------------+----------------+
+| cid  | parentname | total_children |
++------+------------+----------------+
+|    1 | Ravi       |              1 |
+|    2 | Ravi       |              1 |
+|    3 | Anita      |              1 |
+|    4 | Anita      |              1 |
+|    5 | Suresh     |              1 |
++------+------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql>
